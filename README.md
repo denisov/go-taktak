@@ -1,4 +1,4 @@
-#go-taktak
+# go-taktak
 
 Утилита для сбора статистики ответов сайта https://taktaktak.ru/
 
@@ -26,7 +26,5 @@ Options:
   --sleep=<sec>     сон в сек между запросами [default: 1].
   --base-dir=<dir>  базовая директория, в ней ищется конфиг и создаются отчёты [default: ~/taktak]
 
-```
-  
-  
+```  
   
