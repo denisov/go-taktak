@@ -1,0 +1,10 @@
+users:
+  123: Иванов
+  456: Петров
+
+email:
+  from: user@gmail.com
+  to: abc@yandex.ru
+  password: xxxxxx
+  host: smtp.gmail.com
+  port: 587
