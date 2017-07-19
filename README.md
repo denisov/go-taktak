@@ -27,4 +27,4 @@ Options:
   --base-dir=<dir>  базовая директория, в ней ищется конфиг и создаются отчёты [default: ~/taktak]
 
 ```  
-  
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6bb3bf5ca2c547e1990e76792bdd566d)](https://www.codacy.com/app/elgato.andrey/go-taktak?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=denisov/go-taktak&amp;utm_campaign=Badge_Grade)  
