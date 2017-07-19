@@ -1,5 +1,7 @@
 # go-taktak
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6bb3bf5ca2c547e1990e76792bdd566d)](https://www.codacy.com/app/elgato.andrey/go-taktak?utm_source=github.com&utm_medium=referral&utm_content=denisov/go-taktak&utm_campaign=badger)
+
 Утилита для сбора статистики ответов сайта https://taktaktak.ru/
 
 ##### Особенности:
