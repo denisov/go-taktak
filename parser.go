@@ -7,8 +7,10 @@ import (
 	"strings"
 	"time"
 
+	"crypto/tls"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/goodsign/monday"
+	"net/http"
 )
 
 // возвращает статистику проблем, решённых пользователем
@@ -61,9 +63,10 @@ func getUserStat(userId, month, year, monthDeep int) (problems []problem) {
 // getProblems возвращает проблемы, решённые прользователем
 func getProblems(userId, page int) []problem {
 	url := fmt.Sprintf("https://taktaktak.ru/person/%d/answers?page=%d&ajax=2", userId, page)
-	doc, err := goquery.NewDocument(url)
+	resp := getResponse(url)
+	doc, err := goquery.NewDocumentFromResponse(resp)
 	if err != nil {
-		log.Fatalf("Не могу открыть URL: %s. %s", url, err)
+		log.Fatalf("Не могу создать документ для парсинга URL: %s. %s", url, err)
 	}
 
 	var problems []problem
@@ -100,7 +103,12 @@ func getProblems(userId, page int) []problem {
 
 // getSolutionDate возвращает дату решения проблемы. Дата долждна быть всегда, если нет - вернёт нулевое время
 func getSolutionDate(url string, userId int) time.Time {
-	doc, err := goquery.NewDocument(url)
+	resp := getResponse(url)
+	doc, err := goquery.NewDocumentFromResponse(resp)
+	if err != nil {
+		log.Fatalf("Не могу создать документ для парсинга URL: %s. %s", url, err)
+	}
+
 	time.Sleep(2 * time.Second)
 	if err != nil {
 		log.Fatalf("Не могу открыть URL: %s. %s", url, err)
@@ -123,4 +131,19 @@ func getSolutionDate(url string, userId int) time.Time {
 	})
 
 	return solutionDate
+}
+
+func getResponse(urlToParse string) *http.Response {
+
+	// FIXME не надо каждый раз создавать
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr}
+	resp, err := client.Get(urlToParse)
+	if err != nil {
+		log.Fatalf("Не могу открыть URL: %s. %s", urlToParse, err)
+	}
+
+	return resp
 }
