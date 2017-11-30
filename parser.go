@@ -36,8 +36,17 @@ func getUserStat(userId, month, year, monthDeep int) (problems []problem) {
 		for _, problemItem := range problemsSlice {
 
 			solutionDate := getSolutionDate(problemItem.url, userId)
+
+			if solutionDate.IsZero() {
+				log.Printf(
+					"Проблема: %-55s (%s)   нулевая дата, пропускаем. Коммент удалён?",
+					truncate(problemItem.title, 50, ".."),
+					monday.Format(problemItem.problemDate, monday.DefaultFormatRuRUMedium, monday.LocaleRuRU),
+				)
+				continue
+			}
 			if solutionDate.Before(maxDate) {
-				log.Print("Время решения превысило максимальную дату")
+				log.Printf("Время решения превысило максимальную дату. %s => %v", problemItem.title, solutionDate)
 				return
 			}
 
